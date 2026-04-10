@@ -1,1 +1,102 @@
-# Minha-Aposentadoria
+import javax.swing.JOptionPane;
+
+public class Aposentadoria {
+
+    public static void main(String[] args) {
+
+        int opcao;
+
+        do {
+
+            int idade;
+            int anosContribuicao;
+            char sexo;
+            int anosFaltantesContribuicao;
+            int anosFaltantesIdade;
+
+            try {
+
+                String idadeStr = JOptionPane.showInputDialog("Digite sua idade:");
+                if (idadeStr == null || idadeStr.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Idade não pode ser vazia!");
+                    continue;
+                }
+                idade = Integer.parseInt(idadeStr);
+
+                String sexoStr = JOptionPane.showInputDialog("Digite seu sexo (M ou F):");
+                if (sexoStr == null || sexoStr.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Sexo não pode ser vazio!");
+                    continue;
+                }
+                sexo = sexoStr.toUpperCase().charAt(0);
+
+                String contribStr = JOptionPane.showInputDialog("Digite seus anos de contribuição:");
+                if (contribStr == null || contribStr.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Contribuição não pode ser vazia!");
+                    continue;
+                }
+                anosContribuicao = Integer.parseInt(contribStr);
+
+                if (idade < 0 || anosContribuicao < 0) {
+                    JOptionPane.showMessageDialog(null, "Valores não podem ser negativos!");
+                    continue;
+                }
+
+                if (sexo == 'F') {
+
+                    anosFaltantesContribuicao = 30 - anosContribuicao;
+                    anosFaltantesIdade = 60 - idade;
+
+                    if (idade >= 60 || anosContribuicao >= 30) {
+                        JOptionPane.showMessageDialog(null,
+                                "Você já tem direito à aposentadoria.");
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Ainda não pode se aposentar.\n\n" +
+                                "Faltam:\n" +
+                                Math.max(0, anosFaltantesIdade) + " anos para idade mínima\n" +
+                                Math.max(0, anosFaltantesContribuicao) + " anos de contribuição");
+                    }
+
+                } else if (sexo == 'M') {
+
+                    anosFaltantesContribuicao = 35 - anosContribuicao;
+                    anosFaltantesIdade = 65 - idade;
+
+                    if (idade >= 65 || anosContribuicao >= 35) {
+                        JOptionPane.showMessageDialog(null,
+                                "Você já tem direito à aposentadoria.");
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Ainda não pode se aposentar.\n\n" +
+                                "Faltam:\n" +
+                                Math.max(0, anosFaltantesIdade) + " anos para idade mínima\n" +
+                                Math.max(0, anosFaltantesContribuicao) + " anos de contribuição");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Sexo inválido. Digite apenas M ou F.");
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Erro: Digite apenas números válidos!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,
+                        "Erro inesperado!");
+            }
+
+            opcao = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja calcular novamente?",
+                    "Continuar",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+        } while (opcao == JOptionPane.YES_OPTION);
+
+        JOptionPane.showMessageDialog(null, "Programa encerrado.");
+        System.exit(0);
+    }
+}
